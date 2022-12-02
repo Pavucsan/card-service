@@ -28,5 +28,6 @@ public class Constant {
     public static final String ERROR = "ERROR";
 
     public static final String GET_CARD_LIST = "GET_CARD_LIST";
+    public static final String ADD_CARD_ITEM = "ADD_CARD_ITEM";
 
 }

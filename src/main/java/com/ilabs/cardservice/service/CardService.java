@@ -1,5 +1,6 @@
 package com.ilabs.cardservice.service;
 
+import com.ilabs.cardservice.dto.request.CardItemRequest;
 import com.ilabs.cardservice.entity.Card;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,5 @@ public interface CardService {
 
     public List<Card> getItem();
 
-    public Card addItem();
-
-    public boolean removeItem();
+    public Card addCardItem(CardItemRequest cardItemRequest);
 }

@@ -1,29 +1,31 @@
 package com.ilabs.cardservice.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
-@Getter
-@Setter
-@Table(name = "cart")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Table(name = "card")
 public class Card {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long card_id;
+    @Column(name = "card_id")
+    private long cardId;
 
-    @OneToMany(mappedBy = "cart")
-    private Set<Items> cartItem;
+    @Column(name = "card_name")
+    private String cardName;
 
-    @Override
-    public String toString() {
-        return "Card{" +
-                "card_id=" + card_id +
-                ", cartItem=" + cartItem +
-                '}';
-    }
+    @OneToMany(targetEntity = Item.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "card_id_fk", referencedColumnName = "card_id")
+    private List<Item> cardItem;
+
 }

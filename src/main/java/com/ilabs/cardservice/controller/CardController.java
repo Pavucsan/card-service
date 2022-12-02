@@ -1,6 +1,7 @@
 package com.ilabs.cardservice.controller;
 
 import com.ilabs.cardservice.constant.Constant;
+import com.ilabs.cardservice.dto.request.CardItemRequest;
 import com.ilabs.cardservice.dto.response.CommonResponse;
 import com.ilabs.cardservice.entity.Card;
 import com.ilabs.cardservice.enumaration.StatusCode;
@@ -10,9 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,7 +26,7 @@ public class CardController {
         this.cardService = cardService;
     }
 
-    @GetMapping
+    @GetMapping(path = "/cards")
     public ResponseEntity<CommonResponse> getCard() {
         log.info(Constant.GET_CARD_LIST);
         CommonResponse response = new CommonResponse();
@@ -50,12 +49,31 @@ public class CardController {
         }
     }
 
-    @PostMapping
-    public CommonResponse addCard() {
-        return null;
+    @PostMapping("/card/item/add")
+    public ResponseEntity<CommonResponse> addCardItem(@RequestBody CardItemRequest cardItemRequest) {
+        log.info(Constant.ADD_CARD_ITEM);
+        CommonResponse response = new CommonResponse();
+        Card card;
+
+        try {
+            card = cardService.addCardItem(cardItemRequest);
+
+            response.setData(card);
+            response.setMessage(StatusCode.SUCCESS.getValue());
+            response.setStatusCode(StatusCode.SUCCESS.getCode());
+
+            log.info(Constant.THREE_VALUES, Constant.ADD_CARD_ITEM, Constant.SUCCESS, response);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception ex) {
+            log.error(Constant.FOUR_VALUES, Constant.ADD_CARD_ITEM, Constant.ERROR, ex.getMessage(), ex);
+            response.setMessage(StatusCode.ERROR.getValue());
+            response.setStatusCode(StatusCode.ERROR.getCode());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
     }
 
-    public CommonResponse removeItem() {
+    @PostMapping("/card/item/remove/{id}")
+    public CommonResponse removeItem(@PathVariable long itemId) {
         return null;
     }
 }
