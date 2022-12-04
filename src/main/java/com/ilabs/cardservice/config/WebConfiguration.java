@@ -24,7 +24,8 @@ public class WebConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/card/**").access("hasRole('ADMIN')");
+                .antMatchers("/card/**").access("hasRole('ADMIN')")
+                .antMatchers("/cards").access("hasRole('USER')");
 
     }
 }
