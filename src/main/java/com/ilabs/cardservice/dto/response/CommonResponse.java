@@ -1,10 +1,10 @@
 package com.ilabs.cardservice.dto.response;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.ToString;
 
-@Getter
-@Setter
+@Data
+@ToString
 public class CommonResponse {
     private Object data;
     private String message;

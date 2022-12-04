@@ -72,8 +72,25 @@ public class CardController {
         }
     }
 
-    @PostMapping("/card/item/remove/{id}")
-    public CommonResponse removeItem(@PathVariable long itemId) {
-        return null;
+    @PostMapping("/card/remove/{id}")
+    public ResponseEntity<CommonResponse> removeCard(@PathVariable long cardId) {
+        log.info(Constant.REMOVE_CARD);
+        CommonResponse response = new CommonResponse();
+
+        try {
+            boolean result = cardService.removeCard(cardId);
+
+            response.setData(result);
+            response.setMessage(StatusCode.SUCCESS.getValue());
+            response.setStatusCode(StatusCode.SUCCESS.getCode());
+
+            log.info(Constant.THREE_VALUES, Constant.REMOVE_CARD, Constant.SUCCESS, response);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception ex) {
+            log.error(Constant.FOUR_VALUES, Constant.REMOVE_CARD, Constant.ERROR, ex.getMessage(), ex);
+            response.setMessage(StatusCode.ERROR.getValue());
+            response.setStatusCode(StatusCode.ERROR.getCode());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
     }
 }

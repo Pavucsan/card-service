@@ -37,5 +37,11 @@ public class CardServiceImpl implements CardService {
         return cardRepository.save(cardItemRequest.getCard());
     }
 
+    @Override
+    public boolean removeCard(long cardId) {
+        cardRepository.deleteById(cardId);
+        return true;
+    }
+
 
 }

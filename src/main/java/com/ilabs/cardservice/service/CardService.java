@@ -12,4 +12,6 @@ public interface CardService {
     public List<Card> getItem();
 
     public Card addCardItem(CardItemRequest cardItemRequest);
+
+    public boolean removeCard(long cardId);
 }

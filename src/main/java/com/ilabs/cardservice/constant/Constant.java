@@ -29,5 +29,7 @@ public class Constant {
 
     public static final String GET_CARD_LIST = "GET_CARD_LIST";
     public static final String ADD_CARD_ITEM = "ADD_CARD_ITEM";
+    public static final String REMOVE_CARD_ITEM = "REMOVE_CARD_ITEM";
 
+    public static final String REMOVE_CARD = "REMOVE_CARD";
 }
