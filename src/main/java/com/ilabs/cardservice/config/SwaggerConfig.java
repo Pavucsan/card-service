@@ -41,9 +41,9 @@ public class SwaggerConfig {
         return new ApiInfo(
                 "iLabs",
                 "Assignment",
-                "LMS-Service API",
+                "card-Service API",
                 "Terms of service",
-                new Contact("LMS-service", "www.google.com", "smpavucsan@gmail.com"),
+                new Contact("card-service", "www.google.com", "smpavucsan@gmail.com"),
                 "License of API", "API license URL", Collections.emptyList());
     }
 
