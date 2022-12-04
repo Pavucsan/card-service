@@ -7,10 +7,12 @@ import com.ilabs.cardservice.repository.ItemRepository;
 import com.ilabs.cardservice.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class CardServiceImpl implements CardService {
 
     private CardRepository cardRepository;
@@ -39,6 +41,7 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public boolean removeCard(long cardId) {
+        Card card = cardRepository.getById(cardId);
         cardRepository.deleteById(cardId);
         return true;
     }

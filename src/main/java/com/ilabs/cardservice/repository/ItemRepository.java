@@ -16,4 +16,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     @Query(value = "DELETE FROM item i WHERE i.item_id = :itemId AND i.card_id_fk= :cardId", nativeQuery = true)
     public void removeCaItem(@Param("cardId") long cardId, @Param("itemId") long itemId);
 
+    @Query(value = "SELECT count(*) FROM item i WHERE i.item_id = :itemId AND i.card_id_fk= :cardId", nativeQuery = true)
+    public int cardItemExist(@Param("cardId") long cardId, @Param("itemId") long itemId);
+
 }

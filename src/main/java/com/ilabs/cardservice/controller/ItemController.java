@@ -4,6 +4,7 @@ import com.ilabs.cardservice.constant.Constant;
 import com.ilabs.cardservice.dto.request.CardItemRemoveRequest;
 import com.ilabs.cardservice.dto.response.CommonResponse;
 import com.ilabs.cardservice.enumaration.StatusCode;
+import com.ilabs.cardservice.exception.CardItemNotExistException;
 import com.ilabs.cardservice.service.ItemService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.smartcardio.CardNotPresentException;
 
 @RestController
 public class ItemController {
@@ -39,6 +42,11 @@ public class ItemController {
 
             log.info(Constant.THREE_VALUES, Constant.REMOVE_CARD_ITEM, Constant.SUCCESS, response);
             return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (CardNotPresentException | CardItemNotExistException ex){
+            log.error(Constant.THREE_VALUES, Constant.REMOVE_CARD_ITEM, Constant.ERROR, ex.getMessage());
+            response.setMessage(ex.getMessage());
+            response.setStatusCode(StatusCode.ERROR.getCode());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         } catch (Exception ex) {
             log.error(Constant.FOUR_VALUES, Constant.REMOVE_CARD_ITEM, Constant.ERROR, ex.getMessage(), ex);
             response.setMessage(StatusCode.ERROR.getValue());

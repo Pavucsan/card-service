@@ -32,4 +32,10 @@ public class Constant {
     public static final String REMOVE_CARD_ITEM = "REMOVE_CARD_ITEM";
 
     public static final String REMOVE_CARD = "REMOVE_CARD";
+
+    /**
+     * Exception Message
+     */
+    public static final String CARD_NOT_EXIST = "CARD_NOT_EXIST";
+    public static final String CARD_ITEM_NOT_EXIST = "CARD_ITEM_NOT_EXIST";
 }
