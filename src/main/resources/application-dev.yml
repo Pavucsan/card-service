@@ -21,15 +21,11 @@ spring:
 #        format_sql: true
 
 #autherization
-#security:
-#  oauth2:
-#    resource:
-#      token-info-uri: http://localhost:8383/oauth/check_token
-#    client:
-#      client-id: il
-#      client-secret: pin
+#  security:
+#    oauth2:
+#      resource:
+#        token-info-uri: http://localhost:8082/oauth/check_token
+#      client:
+#        client-id: ilabs
+#        client-secret: code
 
-# user api call
-#auth:
-#  user:
-#    url: http://localhost:8383/user
