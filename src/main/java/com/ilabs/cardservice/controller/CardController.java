@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class CardController {
         this.cardService = cardService;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @GetMapping(path = "/cards")
     public ResponseEntity<CommonResponse> getCard() {
         log.info(Constant.GET_CARD_LIST);
@@ -49,6 +51,8 @@ public class CardController {
         }
     }
 
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/card/item/add")
     public ResponseEntity<CommonResponse> addCardItem(@RequestBody CardItemRequest cardItemRequest) {
         log.info(Constant.ADD_CARD_ITEM);
@@ -72,6 +76,8 @@ public class CardController {
         }
     }
 
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/card/remove/{id}")
     public ResponseEntity<CommonResponse> removeCard(@PathVariable long cardId) {
         log.info(Constant.REMOVE_CARD);

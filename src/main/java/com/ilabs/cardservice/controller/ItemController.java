@@ -11,7 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,6 +31,8 @@ public class ItemController {
         this.itemService = itemService;
     }
 
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping(path = "/card/item/remove")
     public ResponseEntity<CommonResponse> removeItem(@RequestBody CardItemRemoveRequest cardItemRemoveRequest) {
         log.info(Constant.REMOVE_CARD_ITEM);
@@ -53,6 +57,13 @@ public class ItemController {
             response.setStatusCode(StatusCode.ERROR.getCode());
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
+    }
+
+
+    @PreAuthorize("hasAnyRole('USER')")
+    @GetMapping("/test")
+    public String getMapping(){
+        return "TEST_ROLE";
     }
 
 }
