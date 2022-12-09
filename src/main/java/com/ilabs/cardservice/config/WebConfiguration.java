@@ -21,11 +21,13 @@ public class WebConfiguration extends WebSecurityConfigurerAdapter {
                 "/webjars/**");
     }
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.authorizeRequests()
-//                .antMatchers("/card/**").access("hasRole('ADMIN')")
-//                .antMatchers("/cards").access("hasRole('ADMIN')");
-//
-//    }
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers("/card/**").hasAnyRole("ADMIN")
+//                .antMatchers("/test2").hasAnyRole("USER")
+//                .antMatchers("/test2").access("hasRole('USER')")
+                .antMatchers("/cards").access("hasRole('ADMIN')");
+
+    }
 }

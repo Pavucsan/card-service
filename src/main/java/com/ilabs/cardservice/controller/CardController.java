@@ -27,8 +27,8 @@ public class CardController {
         this.cardService = cardService;
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @GetMapping(path = "/cards")
+    @PreAuthorize("hasAnyAuthority('ADMIN_READ')")
     public ResponseEntity<CommonResponse> getCard() {
         log.info(Constant.GET_CARD_LIST);
         CommonResponse response = new CommonResponse();
@@ -51,9 +51,8 @@ public class CardController {
         }
     }
 
-
-    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/card/item/add")
+    @PreAuthorize("hasAnyAuthority('ADMIN_WRITE')")
     public ResponseEntity<CommonResponse> addCardItem(@RequestBody CardItemRequest cardItemRequest) {
         log.info(Constant.ADD_CARD_ITEM);
         CommonResponse response = new CommonResponse();
@@ -77,8 +76,8 @@ public class CardController {
     }
 
 
-    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/card/remove/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN_DELETE')")
     public ResponseEntity<CommonResponse> removeCard(@PathVariable long cardId) {
         log.info(Constant.REMOVE_CARD);
         CommonResponse response = new CommonResponse();

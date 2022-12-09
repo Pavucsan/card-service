@@ -12,11 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.smartcardio.CardNotPresentException;
 
 @RestController
@@ -32,8 +35,9 @@ public class ItemController {
     }
 
 
-    @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping(path = "/card/item/remove")
+//    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN_DELETE')")
     public ResponseEntity<CommonResponse> removeItem(@RequestBody CardItemRemoveRequest cardItemRemoveRequest) {
         log.info(Constant.REMOVE_CARD_ITEM);
         CommonResponse response = new CommonResponse();
@@ -60,10 +64,23 @@ public class ItemController {
     }
 
 
-    @PreAuthorize("hasAnyRole('USER')")
     @GetMapping("/test")
+    @PreAuthorize("hasAnyAuthority('USER_READ')")
     public String getMapping(){
         return "TEST_ROLE";
+    }
+
+    @GetMapping("/test2")
+//    @PreAuthorize("hasRole('USER')")
+    public String getTest2(HttpServletRequest request, OAuth2Authentication oAuth2Authentication){
+        if (request.isUserInRole("ADMIN")) {
+            log.info("ADMIN");
+        }
+        if (request.isUserInRole("USER")) {
+            log.info("USER");
+        }
+//        log.info(oAuth2Authentication.getAuthorities().iterator().next().getAuthority());
+        return "TEST_ROLE_2";
     }
 
 }
